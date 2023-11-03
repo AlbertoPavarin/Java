@@ -6,7 +6,7 @@ public class StandardInput{
         Scanner input = new Scanner(System.in);
         System.out.print("Inserisci la stringa: ");
         String string = input.nextLine();
-        String[] tokens = string.split(" ");
-        System.out.println(tokens[0] + "\n" + tokens[1] + "\n" + tokens[2]);
+        Scanner tokenizer = new Scanner(string);
+        System.out.println(tokenizer.next() + "\n" + tokenizer.next() + "\n" + tokenizer.next());
     }
 }
