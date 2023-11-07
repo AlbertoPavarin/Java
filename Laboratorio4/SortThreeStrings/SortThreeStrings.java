@@ -16,7 +16,7 @@ public class SortThreeStrings{
       System.out.print("Inserisci la terza stringa: ");
       strTre = input.nextLine();
       
-      if (strUno.charAt(0) > strDue.charAt(0))
+      if (strUno.compareToIgnoreCase(strDue) > 0)
       {
          strMax = strUno;
          strMin = strDue;
@@ -27,10 +27,10 @@ public class SortThreeStrings{
          strMin = strUno;
       }
       
-      if (strMin.charAt(0) > strTre.charAt(0))
+      if (strMin.compareToIgnoreCase(strTre) > 0)
          strMin = strTre;
       
-      if (strMax.charAt(0) < strTre.charAt(0))
+      if (strMax.compareToIgnoreCase(strTre) < 0)
          strMax = strTre;
          
       if (strMax != strTre && strMax != strTre)
