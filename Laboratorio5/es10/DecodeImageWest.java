@@ -41,31 +41,41 @@ public class DecodeImageWest {
       
       
       //per ogni pixel in posizione x,y
-      ...   
+      //per ogni pixel in posizione x,y
+      for (int x = 0; x < img.width(); x++)
+      {
+         for (int y = 0; y < img.height(); y++)
+         {
          
             // Acquisisco il colore del pixel e lo salvo
             // in una var. riferimento a un oggetto Color           
-            Color c = img.get(x,y)
+            Color c = img.get(x,y);
             
             //Acquisisco i singoli colori e li salvo in varibili int
-            ...
-            
-            
+            int red = c.getRed();
+            int green = c.getGreen();
+            int blue = c.getBlue();
+
             //Modifico i colori
-            ...
-            
+            green = 0;
+            red = 0;
+
+            if (blue >= 16)
+               blue = 0;
+            else  
+               blue *= 16; 
+
             
             //Creo un nuovo colore con questi valori RGB
-            c = 
-            
+            c = new Color(red, green, blue);
             
             //Metto il nuovo colore nell'immagine in pos (x,y)
-            ...
-            
+            img.set(x, y, c);
          }
-      }
+      }   
+      
       //Saving the modified image
       img.save(args[1]);
-      System.out.println("Done...");
+      System.out.println("Done...");  
    }
 }

@@ -21,7 +21,7 @@ e il costruttore Color(int r, int g, int b)
 
 */
 
-public class DecodeImageCopperxs {
+public class DecodeImageCopper {
    public static void main(String args[])throws IOException {
       
       if (args.length != 2){
@@ -41,31 +41,36 @@ public class DecodeImageCopperxs {
       
       
       //per ogni pixel in posizione x,y
-      ...   
+      for (int x = 0; x < img.width(); x++)
+      {
+         for (int y = 0; y < img.height(); y++)
+         {
          
             // Acquisisco il colore del pixel e lo salvo
             // in una var. riferimento a un oggetto Color           
-            Color c = img.get(x,y)
+            Color c = img.get(x,y);
             
             //Acquisisco i singoli colori e li salvo in varibili int
-            ...
-            
-            
+            int red = c.getRed();
+            int green = c.getGreen();
+            int blue = c.getBlue();
+
             //Modifico i colori
-            ...
-            
+            green *= 19;
+            blue *= 19;
+            red = 0;
             
             //Creo un nuovo colore con questi valori RGB
-            c = 
-            
+            c = new Color(red, green, blue);
             
             //Metto il nuovo colore nell'immagine in pos (x,y)
-            ...
-            
+            img.set(x, y, c);
          }
-      }
+      }   
+
       //Saving the modified image
       img.save(args[1]);
       System.out.println("Done...");
+      
    }
 }
