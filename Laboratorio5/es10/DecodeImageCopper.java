@@ -59,9 +59,11 @@ public class DecodeImageCopper {
             green *= 19;
             blue *= 19;
             red = 0;
+
+            int grey = MakeGreyImage.setGreyScale(red, green, blue);
             
             //Creo un nuovo colore con questi valori RGB
-            c = new Color(red, green, blue);
+            c = new Color(grey, grey, grey);
             
             //Metto il nuovo colore nell'immagine in pos (x,y)
             img.set(x, y, c);
