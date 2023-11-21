@@ -1,20 +1,4 @@
 public class ArrayUtil{
-    public static void main(String args[])
-    {
-        int [] arrI = {1, 2, 3};
-        arrI = resize(arrI, 4);
-
-        System.out.println("Array Int");
-        for (int i = 0; i < arrI.length; i++)
-            System.out.println(arrI[i]);
-
-        double [] arrD = {1.2, 2.3, 3.4};
-        arrD = resize(arrD, 4);
-
-        System.out.println("\nArray Double");
-        for (int i = 0; i < arrD.length; i++)
-            System.out.println(arrD[i]);
-    }
 
     public static int[] resize(int[] arr, int newLen)
     {
@@ -56,5 +40,86 @@ public class ArrayUtil{
         }
 
         return newArr;
+    }
+
+    public static int[] randomIntArray(int length, int n)
+    {
+        int[] array = new int[length]; 
+        for (int i = 0; i < length; i++)
+            array[i] = (int)(n * Math.random());
+        
+        return array;
+    }
+
+    public static String printArray(int[] v, int vSize)
+    {
+        String arrayStr = "[ ";
+        for (int i = 0; i < vSize; i++)
+            arrayStr += v[i] + " ";
+        arrayStr += "]";
+
+        return arrayStr;
+    }
+
+    public static void remove(int[] v, int vSize, int index)
+    {
+        if (index <= vSize)
+            v[index] = v[vSize - 1];
+    }
+
+    public static void removeSorted(int[] v, int vSize, int index)
+    {
+        if (index <= vSize)
+        {
+            for (int i = index; i < vSize - 1; i++)
+            {
+                v[i] = v[i+1];
+            }
+        }
+    }
+
+    public static void insert(int[] v, int vSize, int index, int value)
+    {
+        
+        for (int i = vSize-1; i > index; i--)
+        {
+            v[i] = v[i-1];
+        }
+        v[index] = value;
+    }
+
+    public static int findMin(int[] v, int vSize)
+    {
+        int min = v[0];
+        for (int i = 1; i < vSize; i++)
+        {
+            if (v[i] < min)
+                min = v[i];
+        }
+
+        return min;
+    }
+
+    public static int findMax(int[] v, int vSize)
+    {
+        int max = v[0];
+        for (int i = 1; i < vSize; i++)
+        {
+            if (v[i] > max)
+                max = v[i];
+        }
+
+        return max;
+    }
+
+    public static int find(int[] v, int vSize, int target)
+    {
+        for (int i = 0; i < vSize; i++)
+        {
+            if (v[i] == target)
+                return i;
+        }
+
+        return -1;
     }
 }
