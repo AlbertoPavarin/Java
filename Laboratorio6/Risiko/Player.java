@@ -4,11 +4,6 @@ public class Player{
     private int score;
     private int[] diceScores;
 
-    public static void main(String[] args)
-    {
-        
-    }
-
     public Player(String name)
     {
         this.score = 0;
@@ -37,14 +32,23 @@ public class Player{
     public int[] sortDice()
     {
         int[] sorted = new int[DICES_NUMBER];
+        for (int i = 0; i < DICES_NUMBER; i++)
+            sorted[i] = this.diceScores[i];
+
         for (int i = 0; i < DICES_NUMBER - 1; i++)
         {
-            for (int j = i; j < DICES_NUMBER - 1; j++)
+            for (int j = 0; j < DICES_NUMBER - 1; j++)
             {
-                
+                if (sorted[j] > sorted[j+1])
+                {
+                    int tmp = sorted[j];
+                    sorted[j] = sorted[j+1];
+                    sorted[j+1] = tmp;
+                }
             }
         }
-        return new int[]{0, 0, 0};
+    
+        return sorted;
     }
 
     public void addPoint()
