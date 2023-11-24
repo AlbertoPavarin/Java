@@ -7,14 +7,12 @@ public class MyComplex()
     // costruttore
     public MyComplex()
     {
-        re = 0;
-        im = 0;
+        this(0)
     }
 
     public MyComplex(double reale)
     {
-        re = reale;
-        im = 0;
+        this(reale, 0)
     }
 
     public MyComplex(double reale, double immaginaria)
