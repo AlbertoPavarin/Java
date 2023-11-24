@@ -1,18 +1,17 @@
-public class MyComplex()
+public class MyComplex
 {
     private double re;
     private double im;
 
-    private double
     // costruttore
     public MyComplex()
     {
-        this(0)
+        this(0);
     }
 
     public MyComplex(double reale)
     {
-        this(reale, 0)
+        this(reale, 0);
     }
 
     public MyComplex(double reale, double immaginaria)
@@ -31,7 +30,7 @@ public class MyComplex()
         return new MyComplex(addendo1.re + addendo2.re, addendo2.im + addendo2.im);
     }
 
-    public MyComplex sub(MyComplex sottraendo)
+    public MyComplex sub(MyComplex z)
     {
         return new MyComplex(re - z.re, im - z.im);
     }
@@ -45,6 +44,11 @@ public class MyComplex()
     public MyComplex mult(MyComplex z)
     {
         return new MyComplex(re * z.re - im * z.im, re * z.im + im * z.re);
+    }
+
+    public static MyComplex mult(MyComplex z1, MyComplex z2)
+    {
+        return new MyComplex(z1.re * z2.re - z1.im * z2.im, z1.re * z2.im + z1.im * z2.re);
     }
 
     // restituisce la divisione tra il paramentro implicito e quello esplicito
@@ -78,7 +82,7 @@ public class MyComplex()
     }
 
     // restituisce la parte immaginaria
-    public double img()
+    public double im()
     {
         return im;
     }
