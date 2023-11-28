@@ -25,5 +25,7 @@ public class InterruttoreTester{
                 int2.changeStatus();
 
         } while (scelta != 0);
+
+        console.close();
     }
 }
