@@ -57,4 +57,41 @@ public class ArrayAlgs{
             }
         }
     }
+
+    public static void mergesort(int[] arr )
+    {
+        if (arr == null)
+            throw new IllegalArgumentException();
+
+        if (arr.length == 1)
+        {
+            return;
+        }
+        int mid = arr.length / 2;
+        int[] sinistra = new int[mid];
+        int[] destra = new int[arr.length - mid];
+
+        System.arraycopy(arr, 0, sinistra, 0, mid);
+        System.arraycopy(arr, mid, destra, 0, arr.length-mid);
+
+        mergesort(sinistra);
+        mergesort(destra);
+
+        merge(arr, sinistra, destra);
+    }
+
+    private static void merge(int[] a, int[] b, int[] c)
+    {
+        int ia = 0, ib = 0, ic = 0;
+        while (ib < b.length && ic < c.length)
+            if (b[ib] < c[ic])
+                a[ia++] = b[ib++];
+            else
+                a[ia++] = c[ic++];
+
+        while(ib < b.length)
+            a[ia++] = b[ib++];
+        while(ic < c.length)
+            a[ia++] = c[ic++];   
+    }
 }
