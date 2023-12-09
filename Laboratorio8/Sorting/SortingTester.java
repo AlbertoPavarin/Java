@@ -1,25 +1,80 @@
+import java.util.Random;
+
 public class SortingTester{
     public static void main(String[] args){
-        int [] arr = {1, 3, 2, 4, 5};
-        ArrayAlgs.selectionSort(arr);
+        if (args.length != 1)
+            System.out.println("Errore inserisci un numero come parametro");
+        int n = 0;
+        Random rnd = new Random();
 
-        for (int i = 0; i < arr.length; i++)
-            System.out.println(arr[i]);
+        try
+        {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e)
+        {
+            System.out.println("Errore inserisci un numero come parametro");
+        }
 
-        System.out.println("\n");
+        int[] a = new int[n];
+        int[] arr1 = new int[n];
+        int[] arr2 = new int[n];
+        int[] arr3 = new int[n];
 
-        int [] arr2 = {1, 3, 2, 4, 5};
-        ArrayAlgs.insertionSort(arr2);
+        // in modo randomico
+        // for (int i = 0; i < n; i++) 
+        //     a[i] = rnd.nextInt(100) + 1;
+        
+        // array popolato da 0 a n-1
+        for (int i = 0; i < n; i++) 
+            a[i] = i;
 
-        for (int i = 0; i < arr.length; i++)
-            System.out.println(arr2[i]);
+        // array popolato da n-1 a 0    
+        int cnt = n;
+        for (int i = 0; i < n; i++) 
+            a[i] = cnt--;
 
-        System.out.println("\n");
+        System.arraycopy(a, 0, arr1, 0, n);
+        System.arraycopy(a, 0, arr2, 0, n);
+        System.arraycopy(a, 0, arr3, 0, n);
 
-        int [] arr3 = {1, 3, 2, 4, 5};
-        ArrayAlgs.mergesort(arr3);
+        // System.out.println("Array originale: ");
+        // System.out.println(arrayToString(a, n));
+        // System.out.println();
 
-        for (int i = 0; i < arr.length; i++)
-            System.out.println(arr3[i]);
+        System.out.println("Array ordinato con Selection: ");
+        long bT = System.nanoTime();
+        ArrayAlgs.selectionSort(arr1);
+        // System.out.println(arrayToString(arr1, n));
+        long aT = System.nanoTime();
+        System.out.println("Differenza tempo Selection: " + (double)(aT-bT)/1000000000);
+        System.out.println();
+
+        System.out.println("Array ordinato con Merge: ");
+        bT = System.nanoTime();
+        ArrayAlgs.mergesort(arr2);
+        // System.out.println(arrayToString(arr2, n));
+        aT = System.nanoTime();
+        System.out.println("Differenza tempo Merge: " + (double)(aT-bT)/1000000000);
+        System.out.println();
+
+        System.out.println("Array ordinato con Insertion: ");
+        bT = System.nanoTime();
+        ArrayAlgs.insertionSort(arr3);
+        // System.out.println(arrayToString(arr3, n));
+        aT = System.nanoTime();
+        System.out.println("Differenza tempo Inserition: " + (double)(aT-bT)/1000000000);
+        System.out.println();
+    }
+
+    private static String arrayToString(int[] a, int l)
+    {
+        String arrStr = "[ ";
+        for (int i = 0; i < l; i++)
+        {
+            arrStr += a[i] + " ";
+        }
+        arrStr += "]";
+
+        return arrStr;
     }
 }
