@@ -7,7 +7,7 @@ public class SortingTester{
         int n = 0;
         Random rnd = new Random();
 
-        try
+ì        try
         {
             n = Integer.parseInt(args[0]);
         } catch (NumberFormatException e)

@@ -32,7 +32,6 @@ public class InOut
                     System.out.println("Errore in lettura delle parole");
                 }
             }
-            System.out.println(out);
             try(PrintWriter w = new PrintWriter(args[1]))
             {
                 w.print(out);
