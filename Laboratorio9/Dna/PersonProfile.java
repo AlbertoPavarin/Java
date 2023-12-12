@@ -12,4 +12,15 @@ public class PersonProfile{
     {
         return this.name;
     }
+
+    public boolean equals(int[] data)
+    {
+        for (int i = 0; i < data.length; i++)
+        {
+            if (data[i] != this.str[i])
+                return false;
+        }
+
+        return true;
+    }
 }

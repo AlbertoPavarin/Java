@@ -11,17 +11,19 @@ public class DNAProfile{
         }
 
         String sequenza = "", str = "";
+        String[] strName = new String[3];
         int[] strCnt = new int[3]; // 0 -> AGAT, 1 -> AATG, 2 ->  TATC
         PersonProfile[] people = new PersonProfile[3];
         int cnt = 0;
+        boolean found = false;
 
         try(FileReader rProfile = new FileReader(args[0]); Scanner scanProfile = new Scanner(rProfile))
         {
             while (scanProfile.hasNextLine())
             {
-                if (cnt != 0)
+                try (Scanner lineScan = new Scanner(scanProfile.nextLine()))
                 {
-                    try (Scanner lineScan = new Scanner(scanProfile.nextLine()))
+                    if (cnt != 0)
                     {
                         int[] data = new int[3];
                         while(lineScan.hasNext())
@@ -33,15 +35,22 @@ public class DNAProfile{
                             people[cnt-1] = new PersonProfile(name, data);
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        System.out.println("Errore in lettura riga");
-                        System.exit(-1);
+                        int pos = 0;
+                        lineScan.next();
+                        while(lineScan.hasNext())
+                        {
+                            strName[pos++] = lineScan.next(); 
+                        }
                     }
+                    cnt++;
                 }
-                else
-                    scanProfile.nextLine();
-                cnt++;
+                catch (Exception e)
+                {
+                    System.out.println("Errore in lettura riga");
+                    System.exit(-1);
+                }
             }
         }
         catch (IOException e)
@@ -58,31 +67,55 @@ public class DNAProfile{
         {
             System.out.println("Il file " + args[1] + " non esiste");
             System.exit(-1);
-        }
+        }  
 
-        // System.out.println(sequenza);
-        for (int i = 0; i < sequenza.length() - 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            str = sequenza.substring(i, i+4);
-            if (str.equals("AGAT"))
+            int currCnt = 0;
+            boolean ended = false, started = false;
+            for (int j = 0; j < sequenza.length() - 3; j++)
             {
-                strCnt[0]++;
+                str = sequenza.substring(j, j+4);
+                if (str.equals(strName[i]))
+                {
+                    if (ended)
+                    {
+                        ended = false;
+                        currCnt = 0;
+                    }
+                    started = true;
+                    currCnt++;
+                    j+=3;
+                    System.out.println(strName[i] + " - " + currCnt);
+                }
+                else if (started)
+                {
+                    ended = true;
+                }
+                
+                if (currCnt >= strCnt[i])
+                {
+                    strCnt[i] = currCnt;
+                }
             }
-            else if (str.equals("AATG"))
-            {
-                strCnt[1]++;
-            }
-            else if (str.equals("TATC"))
-            {
-                strCnt[2]++;
-            }
-        }   
-
-        for (int i = 0; i < cnt-1; i++)
-            System.out.println(people[i].getName());
+        }
 
         System.out.println("AGAT: " + strCnt[0]);
         System.out.println("AATG: " + strCnt[1]);
         System.out.println("TATC: " + strCnt[2]);
+
+        for (int i = 0; i < cnt-1 && !found; i++)
+        {
+            if (people[i].equals(strCnt))
+            {
+                found = true;
+                System.out.println("Il/La colpevole è: " + people[i].getName());
+            }
+        }
+
+        if (!found)
+        {
+            System.out.println("Nessun match");
+        }
     }
 }
