@@ -86,7 +86,6 @@ public class DNAProfile{
                     started = true;
                     currCnt++;
                     j+=3;
-                    System.out.println(strName[i] + " - " + currCnt);
                 }
                 else if (started)
                 {
