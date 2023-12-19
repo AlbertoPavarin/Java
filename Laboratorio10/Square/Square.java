@@ -15,7 +15,7 @@ public class Square extends Rectangle
    public void setSize(int width, int height)
    {
       if (width == height)
-         this.setSize(width, height);
+         this.setSize(width);
       else
          throw new IllegalArgumentException();  
    }
