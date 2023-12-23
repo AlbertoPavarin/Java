@@ -1,6 +1,6 @@
 public class FixedLengthStack implements Stack{
-    private int vSize;
-    private Object[] v;
+    protected int vSize;
+    protected Object[] v;
 
     public FixedLengthStack()
     {
@@ -20,7 +20,7 @@ public class FixedLengthStack implements Stack{
 
     public void push(Object obj)
     {
-        if (v.length == vSize)
+        if (this.v.length == this.vSize)
             throw new FullStackException();
         v[vSize++] = obj;
     }
