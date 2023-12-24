@@ -32,9 +32,21 @@ public class QueueTester {
         // System.out.println(q.dequeue());
         // System.out.println(q.dequeue());
 
-        GrowableLengthQueue q = new GrowableLengthQueue();
+        // GrowableLengthQueue q = new GrowableLengthQueue();
 
-        for (int i = 0; i < 8; i++)
+        // for (int i = 0; i < 8; i++)
+        // {
+        //     q.enqueue(i+1);
+        // }
+
+        // System.out.println("Elementi aggiunti alla coda\nRisultati della dequeue:");
+
+        // while(!q.isEmpty())
+        //     System.out.println(q.dequeue());
+
+        CircularArrayQueue q = new CircularArrayQueue();
+
+        for (int i = 0; i < 5; i++)
         {
             q.enqueue(i+1);
         }

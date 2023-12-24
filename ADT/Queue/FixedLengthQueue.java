@@ -35,6 +35,7 @@ public class FixedLengthQueue implements Queue{
         {
             this.v[i - 1] = this.v[i];
         }
+        this.v[vSize] = null;
         this.vSize--;
         return tmp;
     }
