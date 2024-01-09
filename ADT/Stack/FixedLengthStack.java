@@ -30,6 +30,7 @@ public class FixedLengthStack implements Stack{
         if (isEmpty())
             throw new EmptyStackException();
         Object tmp = v[vSize - 1];
+        v[vSize - 1] = null;
         vSize--;
         return tmp;
     }
