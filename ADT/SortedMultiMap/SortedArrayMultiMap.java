@@ -21,12 +21,13 @@ public class SortedArrayMultiMap implements SortedMultiMap
 
         if (pos >= 0)
         {   
-            int k = 0;
+            int k = this.size - 1;
             while (k != pos)
             {
                 this.pairs[k + 1] = this.pairs[k];
                 k--;
             }
+            this.pairs[k + 1] = new Pair((Comparable)key, value);
             this.size++;
             return;
         }
@@ -74,7 +75,7 @@ public class SortedArrayMultiMap implements SortedMultiMap
 	public Object[] findAll(Object key)
     {
         if (!(key instanceof Comparable));
-        int pos = binSearch(key);
+        int pos = this.binSearch(key);
 
         Object[] foundValues = new Object[this.size];
 
@@ -96,7 +97,7 @@ public class SortedArrayMultiMap implements SortedMultiMap
                 foundValues[k++] = this.pairs[i].getValue();
         }
 
-        return foundValues;
+        return resizeObj(k, foundValues);
     }
 
 	public Object[] keys()
@@ -106,7 +107,21 @@ public class SortedArrayMultiMap implements SortedMultiMap
 
 	public Object[] removeAll(Object key)
     {
-        return null;
+        if (!(key instanceof Comparable));
+
+        Object[] foundValues = new Object[this.size];
+        int k = 0;
+        Object value;
+
+        do
+        {
+            value = this.remove(key);
+            if (value != null)
+                foundValues[k++] = value;
+
+        } while(value != null);
+
+        return resizeObj(k, foundValues);
     }
 
     public Comparable[] sortedKeys()
@@ -115,7 +130,7 @@ public class SortedArrayMultiMap implements SortedMultiMap
 
         for (int i = 0; i < this.size; i++)
         {
-            keys[i] = (Comparable)this.pairs[i];
+            keys[i] = (Comparable)this.pairs[i].getKey();
         }
 
         return keys;
@@ -141,6 +156,16 @@ public class SortedArrayMultiMap implements SortedMultiMap
         return newPairs;
     }
 
+    private Object[] resizeObj(int newL, Object[] arr)
+    {
+        Object[] newObjs = new Object[newL];
+
+        for (int i = 0; i < newL; i++)
+            newObjs[i] = arr[i];
+
+        return newObjs;
+    }
+
     private int binSearch(Object key)
     {
         if (!(key instanceof Comparable))
@@ -163,6 +188,11 @@ public class SortedArrayMultiMap implements SortedMultiMap
             return binarySearch(0, mid - 1, key);
         else
             return binarySearch(mid + 1, to, key);
+    }
+
+    public int size()
+    {
+        return this.size;
     }
 
     private class Pair
