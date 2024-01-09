@@ -30,10 +30,10 @@ public class StackTester{
         //     }
         // }
 
-        GrowableLengthStack stack = new GrowableLengthStack();
+        SecureStack stack = new SecureStack();
         for (int i = 0; i < 12; i++)
         {
-            stack.push(i+1);
+            stack.push(i+1 + "");
         }
 
         while(!stack.isEmpty())
