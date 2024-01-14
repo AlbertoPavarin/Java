@@ -13,8 +13,8 @@ public class List<E>{
         this.head.setElement(el);
         ListNode<E> newHead = new ListNode<E>(null, this.head, null); 
         this.head.setPrevious(newHead);
-        // this.tail.setPrevious(this.head);
-        System.out.println(this.tail.getPrevious().getElement());
+        if (this.tail.getPrevious() == null)
+            this.tail.setPrevious(this.head);
         this.head = newHead;
     }   
 
@@ -28,6 +28,9 @@ public class List<E>{
 
     public E removeFirst()
     {
+        if(this.isEmpty())
+            throw new EmptyListException();
+            
         ListNode<E> firstNode = this.getFirst();
         
         this.head = firstNode;
@@ -38,6 +41,9 @@ public class List<E>{
 
     public E removeLast()
     {
+        if(this.isEmpty())
+            throw new EmptyListException();
+
         ListNode<E> lastNode = this.tail.getPrevious();
         this.tail = lastNode;
         this.tail.setElement(null);
@@ -69,6 +75,11 @@ public class List<E>{
         return str + "]";
     }
 
+    public boolean isEmpty()
+    {
+        return (this.head.getNext() == this.tail);
+    }
+
     public class ListNode<E>{
         public E element;
         public ListNode<E> next;
@@ -78,6 +89,7 @@ public class List<E>{
         {
             this.element = el;
             this.next = next;
+            this.previous = previous;
         }
 
         public E getElement()
@@ -111,3 +123,5 @@ public class List<E>{
         }
     }
 }
+
+class EmptyListException extends RuntimeException{}

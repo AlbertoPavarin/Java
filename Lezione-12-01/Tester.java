@@ -14,6 +14,12 @@ public class Tester{
 
         list.removeFirst();
         list.removeLast();
+        list.removeLast();
+        list.removeLast();
+        list.removeLast();
+        list.removeFirst();
+        list.removeLast();
+        list.removeFirst();
 
         System.out.println(list);
     }
