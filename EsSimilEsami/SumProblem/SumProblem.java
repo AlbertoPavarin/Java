@@ -34,6 +34,7 @@ public class SumProblem{
         catch (IOException e)
         {
             System.out.println("Errore in lettura del file");
+            System.exit(-1);
         }
 
         int[][] zeroSumNumbers = new int[k][2];
