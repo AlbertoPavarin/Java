@@ -11,23 +11,49 @@ public class RubricaTester
             System.exit(-1);
         }
 
+        Rubrica r1 = new Rubrica();
+        Rubrica r2 = new Rubrica();
+
         try (FileReader f = new FileReader(args[0]); Scanner s = new Scanner(f))
         {
-            s.useDelimiter("\n");
+            s.useDelimiter("[: \\s]+");;
             try
             {
                 while(s.hasNextLine())
-                    System.out.println(s.next());
+                    r1.insert(s.next(), Long.parseLong(s.next()));
             }
             catch(NoSuchElementException e){}
         }
         catch(IOException e)
         {
             System.out.println("Errore in lettura o il file" + args[0] + " non esiste");
+            System.exit(-1);
         }
 
-        Rubrica r1 = new Rubrica();
-        Rubrica r2 = new Rubrica();
+        System.out.println("Rubrica 1:" + r1);
+
+        Scanner console = new Scanner(System.in);
+        String name = "";
+
+        do 
+        {
+            System.out.print("Indica un nome che desideri spostare dalla rubrica 1 alla 2 (Q per uscire): ");
+            name = console.next();
+            try
+            {
+                Object phoneNumber = r1.find(name);
+                System.out.println(phoneNumber);
+                r1.remove(name);
+                r2.insert(name, phoneNumber);
+                System.out.println(name + " è stato spostato nella seconda rubrica");
+            }
+            catch(MapItemNotFoundException e)
+            {
+                System.out.println("Nome non trovato");
+            }
+        } while (name.compareTo("Q") != 0);
+
+        System.out.println("\nRubrica 2:" + r2);
     }
 }
 
@@ -45,7 +71,7 @@ class Rubrica implements Map
 
     public String toString()
     { 
-        String str = "Rubrica:";
+        String str = "";
         for (int i = 0; i < this.size; i++)
             str += "\n" + this.p[i];
 
@@ -118,7 +144,7 @@ class Rubrica implements Map
 
         if (midKey.compareTo(target) == 0) // le chiavi sono uguali
             return mid;
-        else if (midKey.compareTo(target) < 0) // la prima chiave è minore della seconda
+        else if (midKey.compareTo(target) > 0) // la prima chiave è minore della seconda
             return binSearch(from, mid - 1, target);
         else
             return binSearch(mid + 1, to, target);
