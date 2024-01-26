@@ -1,20 +1,51 @@
 // nome e cognome del candidato, matricola, data, numero della postazione
-
+import java.util.*;
+import java.io.*;
 
 public class StudentSetTester
 {   public static void main(String[] args)
     {
-        StudentSet ss = new StudentSet();
-        Student s1 = new Student("A", "A", 1235);
-        Student s2 = new Student("P", "A", 1233);
-        Student s3 = new Student("P", "A", 1234);
+        if (args.length != 1)
+        {
+            System.out.println("Uso: StudentSetTester input.txt");
+            System.exit(-1);
+        }
 
-        ss.add(s1);
-        ss.add(s2);
-        ss.add(s3);
+        StudentSet ss = new StudentSet();
+
+        try (FileReader r = new FileReader(args[0]); Scanner s = new Scanner(r))
+        {
+            s.useDelimiter("[: \\s]+");
+            try
+            {
+                while(s.hasNextLine())
+                    ss.add(new Student(s.next(), s.next(), Integer.parseInt(s.next())));
+            }
+            catch (NoSuchElementException e)
+            { }
+        }
+        catch (IOException e)
+        {
+            System.out.println("Errore nella lettura o il file non esiste");
+            System.exit(-1);
+        }
+
 
         System.out.print("Studenti: ");
-        System.out.println(ss);
+        System.out.println(ss + "\n");
+
+        Scanner console = new Scanner(System.in);
+
+        while(true)
+        {
+            System.out.println("Inserisci la prima matricola:");
+            String name1 = console.next();
+
+            System.out.println("Inserisci la seconda matricola:");
+            String name2 = console.next();
+
+            System.out.println(ss.subSet(Integer.parseInt(name1), Integer.parseInt(name2)));
+        }
     }
 }
 
@@ -124,7 +155,7 @@ class StudentSet implements SortedSet
 
         for (int i = 0; i < this.size; i++)
         {
-            if (fromObj.compareTo(this.s[i]) >= 0 && toObj.compareTo(this.s[i]) < 0)
+            if (fromObj.compareTo(this.s[i].getMatricola()) >= 0 && toObj.compareTo(this.s[i].getMatricola()) < 0)
                 set.add(this.s[i]);
         }
 
