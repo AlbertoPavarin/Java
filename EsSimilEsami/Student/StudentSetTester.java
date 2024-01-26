@@ -38,14 +38,23 @@ public class StudentSetTester
 
         while(true)
         {
-            System.out.println("Inserisci la prima matricola:");
-            String name1 = console.next();
+            try
+            {
+                System.out.println("Inserisci la prima matricola:");
+                String name1 = console.next();
 
-            System.out.println("Inserisci la seconda matricola:");
-            String name2 = console.next();
+                System.out.println("Inserisci la seconda matricola:");
+                String name2 = console.next();
 
-            System.out.println(ss.subSet(Integer.parseInt(name1), Integer.parseInt(name2)));
+                System.out.println(ss.subSet(Integer.parseInt(name1), Integer.parseInt(name2)));
+            }
+            catch (NoSuchElementException e)
+            {
+                break;
+            }
         }
+
+        console.close();
     }
 }
 
@@ -77,11 +86,14 @@ class StudentSet implements SortedSet
     */
     public void add(Comparable obj)
     {
+        if (!(obj instanceof Student))
+            return;
+
         if (this.contains(obj))
             return;
 
         if (this.s.length == this.size)
-            this.s = this.resize();
+            this.resize();
 
         int i = this.size - 1;
         while (i >= 0 && ((Student)obj).compareTo(this.s[i]) < 0)
@@ -149,14 +161,21 @@ class StudentSet implements SortedSet
     */
     public SortedSet subSet(Comparable fromObj, Comparable toObj)
     {
-        SortedSet set = new StudentSet();
-        if (fromObj.equals(toObj) || fromObj.compareTo(toObj) < 0)
+        if (!(fromObj instanceof Student) || !(toObj instanceof Student))
+            throw new IllegalArgumentException();
+
+        if (fromObj.equals(toObj) || fromObj.compareTo(toObj) > 0)
             return set;
+
+        StudentSet set = new StudentSet();    
 
         for (int i = 0; i < this.size; i++)
         {
-            if (fromObj.compareTo(this.s[i].getMatricola()) >= 0 && toObj.compareTo(this.s[i].getMatricola()) < 0)
-                set.add(this.s[i]);
+            if (fromObj.compareTo(this.s[i]) <= 0 && toObj.compareTo(this.s[i]) > 0)
+            {
+                if (set.s.length == set.size) set.resize();
+                set.s[set.size++] = this.s[i];
+            }
         }
 
         return set;
@@ -170,12 +189,12 @@ class StudentSet implements SortedSet
         return str; 
     }   
 
-    private Student[] resize()
+    private void resize()
     {
         Student[] newS = new Student[this.size * 2];
         System.arraycopy(this.s, 0, newS, 0, this.size);
 
-        return newS;
+        this.s = newS;
     }       
 
     //campi di esemplare 
