@@ -1,0 +1,5 @@
+arm  : braccio
+hand  : mano
+head  : testa capo comandante
+leg  : gamba
+
