@@ -16,7 +16,7 @@ public class RubricaTester
 
         try (FileReader f = new FileReader(args[0]); Scanner s = new Scanner(f))
         {
-            s.useDelimiter("[: \\s]+");;
+            s.useDelimiter("[: \\s]+");
             try
             {
                 while(s.hasNextLine())
