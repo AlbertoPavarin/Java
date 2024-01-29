@@ -128,7 +128,7 @@ class ArrayQueue implements Queue
             this.resize();
             if (this.front > this.back)
             {
-                System.arraycopy(this.q, 0, this.q, this.q.length, back);
+                System.arraycopy(this.q, 0, this.q, this.q.length/2, back);
                 back += this.q.length / 2;
             }
         }
@@ -182,7 +182,7 @@ class ArrayQueue implements Queue
     }          
 
     //campi di esemplare ..... da completare ......
-    private final static int INIT = 5;
+    private final static int INIT = 10;
     private Object[] q; 
     private int front, back;
 }
