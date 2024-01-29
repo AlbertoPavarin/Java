@@ -1,24 +1,83 @@
 // nome e cognome del candidato, matricola, data, numero della postazione
-
+import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 public class MultiQueueTester
 {   public static void main(String[] args)
     {
-        ArrayQueue q = new ArrayQueue();
-        q.enqueue(1);
-        q.enqueue(2);
-        q.enqueue(3);
-        q.enqueue(4);
-        q.enqueue(5);
-        q.enqueue(6);
-        q.enqueue(7);
+        if (args.length != 1)
+        {
+            System.out.println("Uso: MultiQueueTester N");
+            System.exit(-1);
+        }
 
-        System.out.println(q.dequeue());
-        System.out.println(q.dequeue());
-        System.out.println(q.dequeue());
-        System.out.println(q.dequeue());
+        int n = 0;
 
-        System.out.println("\n" + q);
+        try
+        {
+            n = Integer.parseInt(args[0]);
+            if (n <= 0)
+                throw new NumberFormatException();
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("Inserisci un numero intero maggiore di 0");
+            System.exit(-1);
+        }
+
+        ArrayMultiQueue mu = new ArrayMultiQueue(n);
+        Scanner console = new Scanner(System.in);
+        boolean done = false;
+        String comando = "", nome = "";
+
+        while(!done)
+        {
+            System.out.println("\n------------Menù------------");
+            System.out.println("Digita \"A\" per aggiungere una persona alla multicoda");
+            System.out.println("Digita \"R\" per aggiungere una persona alla multicoda");
+            System.out.println("Digita \"P\" per aggiungere una persona alla multicoda");
+            System.out.println("Digita \"Q\" per aggiungere una persona alla multicoda");
+
+            try
+            {
+                comando = console.nextLine().toUpperCase();
+                switch(comando)
+                {
+                    case "A":
+                        System.out.print("\nInserisci il nome della persona che desideri inserire: ");
+                        nome = console.nextLine();
+                        mu.add(nome);
+                        System.out.println();
+                        break;
+                    case "R":
+                        System.out.println("Da quale coda vuoi eliminare una persona ( da 0 a " + (n - 1) + " )");
+                        try
+                        {
+                            mu.remove(Integer.parseInt(console.nextLine()));
+                        }
+                        catch (NumberFormatException | EmptyQueueException e)
+                        {
+                            System.out.println("Indice coda non valido o coda vuota");
+                        }
+                        break;
+                    case "P":
+                        System.out.println("\nContenuto della multicoda: ");
+                        System.out.println(mu);
+                        break;
+                    case "Q":
+                        done = true;
+                        break;
+                    default:
+                        System.out.println("Comando non riconosciuto");
+                        break;
+
+                }
+            }
+            catch(NoSuchElementException e)
+            {
+                done = true;
+            }
+        }
     }
 }
 
@@ -143,6 +202,8 @@ class ArrayMultiQueue implements MultiQueue
     public ArrayMultiQueue(int N)
     {
         this.q = new Queue[N];
+        for (int i = 0; i < N; i++)
+            this.q[i] = new ArrayQueue();
     }          
     
     //metodi pubblici dell'interfaccia MultiQueue
@@ -174,7 +235,17 @@ class ArrayMultiQueue implements MultiQueue
     // di elementi pari al minimo, la scelta è indifferente
     public void add(Object obj)
     {
+        Queue minQueue = this.q[0];
 
+        for (int i = 1; i < this.q.length; i++)
+        {
+            if (this.q[i].size() < minQueue.size())
+            {
+                minQueue = this.q[i];
+            }
+        }
+
+        minQueue.enqueue(obj);
     }
 
     // Disaccoda dalla i-esima coda il suo primo elemento e lo restituisce.
@@ -197,7 +268,7 @@ class ArrayMultiQueue implements MultiQueue
     {   
         String str = "";
         for (int i = 0; i < this.q.length; i++)
-            str += this.q[i] + "\n";
+            str += "Coda " + i + ":\n" + this.q[i] + "\n";
 
         return str;
     }          
